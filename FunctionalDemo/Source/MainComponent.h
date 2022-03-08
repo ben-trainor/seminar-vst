@@ -34,6 +34,12 @@ private:
     juce::Rectangle<int> bottomLeft;
     juce::Rectangle<int> bottomRight;
     juce::Rectangle<int> topMiddle;
+    juce::Rectangle<int> buttonBox; // Rectangle to hold all the ratio buttons
+    
+    juce::TextButton ratio4 {"4:1"};
+    juce::TextButton ratio8 {"8:1"};
+    juce::TextButton ratio12 {"12:1"};
+    juce::TextButton ratio20 {"20:1"};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

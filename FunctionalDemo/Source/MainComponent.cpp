@@ -37,6 +37,10 @@ MainComponent::MainComponent()
     addAndMakeVisible(outGainLabel);
     addAndMakeVisible(attackLabel);
     addAndMakeVisible(releaseLabel);
+    addAndMakeVisible(ratio4);
+    addAndMakeVisible(ratio8);
+    addAndMakeVisible(ratio12);
+    addAndMakeVisible(ratio20);
 }
 
 MainComponent::~MainComponent()
@@ -54,6 +58,7 @@ void MainComponent::paint (juce::Graphics& g)
     g.drawRect(bottomLeft);
     g.drawRect(bottomRight);
     g.drawRect(topMiddle);
+    g.drawRect(buttonBox);
 }
 
 void MainComponent::resized()
@@ -65,6 +70,7 @@ void MainComponent::resized()
     const float meterHeight = meterWidth * 0.8;
     const float border = getWidth() / 20;
     const float borderModifier = 1.5;
+    const float buttonBoxBorder = getWidth() / 100;
 
     // Top row of functions
     
@@ -90,6 +96,20 @@ void MainComponent::resized()
         bottomRight.setWidth(knobWidth * knobScaleModifier);
         bottomRight.setHeight(bottomRight.getWidth());
         bottomRight.setPosition(getWidth() - (border * borderModifier) - bottomRight.getWidth(), getHeight() - border - bottomRight.getHeight());
+    
+        // Buttons
+        buttonBox.setWidth(meterWidth);
+        buttonBox.setHeight(meterHeight);
+        buttonBox.setPosition((getWidth() / 2) - (meterWidth / 2), getHeight() - border - meterHeight);
+    
+        ratio4.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+        ratio4.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio4.getHeight() / 2) - buttonBoxBorder);
+        ratio8.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+        ratio8.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + (ratio8.getHeight() / 2) + buttonBoxBorder);
+        ratio12.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+        ratio12.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio12.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio12.getHeight() / 2) - buttonBoxBorder);
+        ratio20.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+        ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
     
     
     
