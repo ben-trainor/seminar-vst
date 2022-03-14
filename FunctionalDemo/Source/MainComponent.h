@@ -47,6 +47,7 @@ class TooltipSlider : public juce::Slider {
         juce::TooltipWindow t;
         juce::Point<int> p;
         juce::Slider s;
+        juce::String tip = "Default tooltip";
         
         void mouseDown(const juce::MouseEvent &e) {
 
@@ -58,13 +59,16 @@ class TooltipSlider : public juce::Slider {
             
             // check the modkeys
             if (modifiers.isPopupMenu()) {
-                t.displayTip(p, "Hello world!");
-//                t.displayTip(p, s.getTooltip());
+                t.displayTip(p, tip);
             }
             else {
                 juce::Slider::mouseDown(e);
             }
             
+        }
+    
+        void setTooltipString(juce::String tipString) {
+            tip = tipString;
         }
     
 };

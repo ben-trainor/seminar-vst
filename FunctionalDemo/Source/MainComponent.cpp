@@ -5,7 +5,10 @@ MainComponent::MainComponent()
 {
     setSize(800, 533);
     
-    addAndMakeVisible(inGain.t); // main tooltip window "t"
+    
+    //Tooltips
+    addAndMakeVisible(inGain.t);
+    inGain.setTooltipString("Volume boost on the front end");
     addAndMakeVisible(outGain.t);
     addAndMakeVisible(attack.t);
     addAndMakeVisible(release.t);
@@ -34,12 +37,6 @@ MainComponent::MainComponent()
     releaseLabel.setText("RELEASE", juce::NotificationType::dontSendNotification);
     releaseLabel.attachToComponent(&release, false);
     release.setLookAndFeel(&otherLookAndFeel);
-    
-    
-    //Tooltips
-//    inGain.setTooltip("Give the signal an extra boost on the way in");
-//    inGain.t.hideTip();
-    
     
     
     // Add them components to the screen
