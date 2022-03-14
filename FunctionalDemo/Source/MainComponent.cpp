@@ -5,27 +5,41 @@ MainComponent::MainComponent()
 {
     setSize(800, 533);
     
+    addAndMakeVisible(inGain.t); // main tooltip window "t"
+    addAndMakeVisible(outGain.t);
+    addAndMakeVisible(attack.t);
+    addAndMakeVisible(release.t);
         
     // Slider declarations, for the main knobs
     inGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     inGain.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    inGainLabel.setText("inGainLabel", juce::NotificationType::dontSendNotification);
+    inGainLabel.setText("IN", juce::NotificationType::dontSendNotification);
     inGainLabel.attachToComponent(&inGain, false);
+    inGain.setLookAndFeel(&otherLookAndFeel);
     
     outGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     outGain.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    outGainLabel.setText("outGainLabel", juce::NotificationType::dontSendNotification);
+    outGainLabel.setText("OUT", juce::NotificationType::dontSendNotification);
     outGainLabel.attachToComponent(&outGain, false);
+    outGain.setLookAndFeel(&otherLookAndFeel);
     
     attack.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     attack.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    attackLabel.setText("attackLabel", juce::NotificationType::dontSendNotification);
+    attackLabel.setText("ATTACK", juce::NotificationType::dontSendNotification);
     attackLabel.attachToComponent(&attack, false);
+    attack.setLookAndFeel(&otherLookAndFeel);
     
     release.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     release.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    releaseLabel.setText("releaseLabel", juce::NotificationType::dontSendNotification);
+    releaseLabel.setText("RELEASE", juce::NotificationType::dontSendNotification);
     releaseLabel.attachToComponent(&release, false);
+    release.setLookAndFeel(&otherLookAndFeel);
+    
+    
+    //Tooltips
+//    inGain.setTooltip("Give the signal an extra boost on the way in");
+//    inGain.t.hideTip();
+    
     
     
     // Add them components to the screen
@@ -41,6 +55,8 @@ MainComponent::MainComponent()
     addAndMakeVisible(ratio8);
     addAndMakeVisible(ratio12);
     addAndMakeVisible(ratio20);
+    
+    
 }
 
 MainComponent::~MainComponent()
@@ -53,12 +69,12 @@ void MainComponent::paint (juce::Graphics& g)
     g.fillAll(juce::Colours::steelblue);
     g.setColour(juce::Colours::white);
         
-    g.drawRect(topLeft);
-    g.drawRect(topRight);
-    g.drawRect(bottomLeft);
-    g.drawRect(bottomRight);
+//    g.drawRect(topLeft);
+//    g.drawRect(topRight);
+//    g.drawRect(bottomLeft);
+//    g.drawRect(bottomRight);
     g.drawRect(topMiddle);
-    g.drawRect(buttonBox);
+//    g.drawRect(buttonBox);
 }
 
 void MainComponent::resized()
@@ -86,6 +102,9 @@ void MainComponent::resized()
         topMiddle.setWidth(meterWidth);
         topMiddle.setHeight(meterHeight);
         topMiddle.setPosition((getWidth() / 2) - (meterWidth / 2), 0 + border);
+    
+        topMiddlePoint.setX(topMiddle.getX());
+        topMiddlePoint.setY(topMiddle.getY());
     
     // Bottom row of functions
     
@@ -120,3 +139,5 @@ void MainComponent::resized()
     
     
 }
+
+//==============================================================================
