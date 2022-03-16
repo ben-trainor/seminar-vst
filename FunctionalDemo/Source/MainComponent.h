@@ -2,9 +2,11 @@
 
 #include <JuceHeader.h>
 
+
 //==============================================================================
 class OtherLookAndFeel : public juce::LookAndFeel_V4 {
     public:
+    
     
         void drawRotarySlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, juce::Slider &) override {
             
@@ -33,44 +35,48 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4 {
             g.setColour (juce::Colours::black);
             g.fillPath (p);
             
-            // font
-//            g.setFont("Consolas");
-            
         }
+    
 };
+
 
 //==============================================================================
 class TooltipSlider : public juce::Slider {
-    
-    public:
-    
-        juce::TooltipWindow t;
-        juce::Point<int> p;
-        juce::Slider s;
-        juce::String tip = "Default tooltip";
-        
-        void mouseDown(const juce::MouseEvent &e) {
 
-            p.setX(e.getMouseDownX());
-            p.setY(e.getMouseDownY());
-            getComponentAt(p);
-            
+    public:
+
+        juce::AttributedString bubbleMsgString;
+        juce::BubbleMessageComponent bubbleMsg;
+        juce::Rectangle<int> bubbleRectangle;
+
+        // defining the text within the slider's bubble and a rectangle around the slider
+        // remember to do these two in the main CPP file when creating a component!
+        void setBubbleMsg(juce::String msg) {
+            bubbleMsgString.clear();
+            bubbleMsgString.append(msg, juce::Colours::white);
+        }
+        void setBubblePosition(juce::Rectangle<int> r) {
+            bubbleRectangle.setBounds(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        }
+
+        // on right click, display the bubble hint
+        void mouseDown(const juce::MouseEvent &e) override {
+
+//            std::cout << "Hello, world!";
+
             juce::ModifierKeys modifiers = juce::ModifierKeys::getCurrentModifiersRealtime();
-            
+
             // check the modkeys
             if (modifiers.isPopupMenu()) {
-                t.displayTip(p, tip);
+//                std::cout << "Right clicked!";
+                bubbleMsg.showAt(bubbleRectangle, juce::AttributedString(bubbleMsgString), 2000);
             }
             else {
-                juce::Slider::mouseDown(e);
+                juce::Slider::mouseDown(e); // do the normal click function
             }
-            
+
         }
-    
-        void setTooltipString(juce::String tipString) {
-            tip = tipString;
-        }
-    
+
 };
 
 
@@ -79,44 +85,51 @@ class TooltipSlider : public juce::Slider {
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::Component
+class MainComponent : public juce::Component
 {
-public:
-    //==============================================================================
-    MainComponent();
-    ~MainComponent() override;
+    public:
+        //==============================================================================
+        MainComponent();
+        ~MainComponent() override;
 
-    //==============================================================================
-    void paint (juce::Graphics&) override;
-    void resized() override;
+        //==============================================================================
+        void paint (juce::Graphics&) override;
+        void resized() override;
+    
+    private:
+        
+        OtherLookAndFeel otherLookAndFeel;
+        
+        TooltipSlider inGain;
+        juce::Label inGainLabel;
+        TooltipSlider outGain;
+        juce::Label outGainLabel;
+        TooltipSlider attack;
+        juce::Label attackLabel;
+        TooltipSlider release;
+        juce::Label releaseLabel;
+        
+        juce::Rectangle<int> topLeft;
+        juce::Rectangle<int> topRight;
+        juce::Rectangle<int> bottomLeft;
+        juce::Rectangle<int> bottomRight;
+        juce::Rectangle<int> topMiddle;
+        juce::Rectangle<int> buttonBox; // Rectangle to hold all the ratio buttons
+        
+        juce::Point<int> topMiddlePoint;
+        
+        juce::TextButton ratio4 {"4:1"};
+        juce::TextButton ratio8 {"8:1"};
+        juce::TextButton ratio12 {"12:1"};
+        juce::TextButton ratio20 {"20:1"};
+    
+        juce::BubbleMessageComponent bubbleMsg;
+    
+        juce::MouseListener rightClickListener;
+    
 
-private:
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
     
-    OtherLookAndFeel otherLookAndFeel;
-    
-    TooltipSlider inGain;
-    juce::Label inGainLabel;
-    TooltipSlider outGain;
-    juce::Label outGainLabel;
-    TooltipSlider attack;
-    juce::Label attackLabel;
-    TooltipSlider release;
-    juce::Label releaseLabel;
-    
-    juce::Rectangle<int> topLeft;
-    juce::Rectangle<int> topRight;
-    juce::Rectangle<int> bottomLeft;
-    juce::Rectangle<int> bottomRight;
-    juce::Rectangle<int> topMiddle;
-    juce::Rectangle<int> buttonBox; // Rectangle to hold all the ratio buttons
-    
-    juce::Point<int> topMiddlePoint;
-    
-    juce::TextButton ratio4 {"4:1"};
-    juce::TextButton ratio8 {"8:1"};
-    juce::TextButton ratio12 {"12:1"};
-    juce::TextButton ratio20 {"20:1"};
-
-    
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
+

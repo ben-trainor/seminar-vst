@@ -6,12 +6,10 @@ MainComponent::MainComponent()
     setSize(800, 533);
     
     
-    //Tooltips
-    addAndMakeVisible(inGain.t);
-    inGain.setTooltipString("Volume boost on the front end");
-    addAndMakeVisible(outGain.t);
-    addAndMakeVisible(attack.t);
-    addAndMakeVisible(release.t);
+    // Tooltips
+//    t.addMouseListener(&listener, true);
+//    inGain.addMouseListener(&listener, true);
+    
         
     // Slider declarations, for the main knobs
     inGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -19,24 +17,32 @@ MainComponent::MainComponent()
     inGainLabel.setText("IN", juce::NotificationType::dontSendNotification);
     inGainLabel.attachToComponent(&inGain, false);
     inGain.setLookAndFeel(&otherLookAndFeel);
+    inGain.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(inGain.bubbleMsg);
     
     outGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     outGain.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     outGainLabel.setText("OUT", juce::NotificationType::dontSendNotification);
     outGainLabel.attachToComponent(&outGain, false);
     outGain.setLookAndFeel(&otherLookAndFeel);
+    outGain.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(outGain.bubbleMsg);
     
     attack.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     attack.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     attackLabel.setText("ATTACK", juce::NotificationType::dontSendNotification);
     attackLabel.attachToComponent(&attack, false);
     attack.setLookAndFeel(&otherLookAndFeel);
+    attack.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(attack.bubbleMsg);
     
     release.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     release.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     releaseLabel.setText("RELEASE", juce::NotificationType::dontSendNotification);
     releaseLabel.attachToComponent(&release, false);
     release.setLookAndFeel(&otherLookAndFeel);
+    release.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(release.bubbleMsg);
     
     
     // Add them components to the screen
@@ -52,7 +58,10 @@ MainComponent::MainComponent()
     addAndMakeVisible(ratio8);
     addAndMakeVisible(ratio12);
     addAndMakeVisible(ratio20);
+
     
+//    addAndMakeVisible(t);
+//    addAndMakeVisible(inGain.t);
     
 }
 
@@ -65,7 +74,9 @@ void MainComponent::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colours::steelblue);
     g.setColour(juce::Colours::white);
-        
+    juce::Font theFont("VCR OSD Mono", "regular", 20.0f);
+    g.setFont(theFont);
+    
 //    g.drawRect(topLeft);
 //    g.drawRect(topRight);
 //    g.drawRect(bottomLeft);
@@ -127,6 +138,11 @@ void MainComponent::resized()
         ratio20.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
         ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
     
+    // Tooltips
+    inGain.setBubblePosition(topLeft);
+    outGain.setBubblePosition(topRight);
+    attack.setBubblePosition(bottomLeft);
+    release.setBubblePosition(bottomRight);
     
     
     inGain.setBounds(topLeft);
@@ -137,4 +153,4 @@ void MainComponent::resized()
     
 }
 
-//==============================================================================
+
