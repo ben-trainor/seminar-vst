@@ -8,48 +8,48 @@ MainComponent::MainComponent()
     
     // Tooltips
 //    t.addMouseListener(&listener, true);
-//    inGain.addMouseListener(&listener, true);
+//    inGainSlider.addMouseListener(&listener, true);
     
         
     // Slider declarations, for the main knobs
-    inGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    inGain.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    inGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    inGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     inGainLabel.setText("IN", juce::NotificationType::dontSendNotification);
-    inGainLabel.attachToComponent(&inGain, false);
-    inGain.setLookAndFeel(&otherLookAndFeel);
-    inGain.setBubbleMsg("Boost the signal volume before it gets processed");
-    addAndMakeVisible(inGain.bubbleMsg);
+    inGainLabel.attachToComponent(&inGainSlider, false);
+    inGainSlider.setLookAndFeel(&otherLookAndFeel);
+    inGainSlider.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(inGainSlider.bubbleMsg);
     
-    outGain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    outGain.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    outGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    outGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     outGainLabel.setText("OUT", juce::NotificationType::dontSendNotification);
-    outGainLabel.attachToComponent(&outGain, false);
-    outGain.setLookAndFeel(&otherLookAndFeel);
-    outGain.setBubbleMsg("Boost the signal volume before it gets processed");
-    addAndMakeVisible(outGain.bubbleMsg);
+    outGainLabel.attachToComponent(&outGainSlider, false);
+    outGainSlider.setLookAndFeel(&otherLookAndFeel);
+    outGainSlider.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(outGainSlider.bubbleMsg);
     
-    attack.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    attack.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    attackSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    attackSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     attackLabel.setText("ATTACK", juce::NotificationType::dontSendNotification);
-    attackLabel.attachToComponent(&attack, false);
-    attack.setLookAndFeel(&otherLookAndFeel);
-    attack.setBubbleMsg("Boost the signal volume before it gets processed");
-    addAndMakeVisible(attack.bubbleMsg);
+    attackLabel.attachToComponent(&attackSlider, false);
+    attackSlider.setLookAndFeel(&otherLookAndFeel);
+    attackSlider.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(attackSlider.bubbleMsg);
     
-    release.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    release.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    releaseSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    releaseSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     releaseLabel.setText("RELEASE", juce::NotificationType::dontSendNotification);
-    releaseLabel.attachToComponent(&release, false);
-    release.setLookAndFeel(&otherLookAndFeel);
-    release.setBubbleMsg("Boost the signal volume before it gets processed");
-    addAndMakeVisible(release.bubbleMsg);
+    releaseLabel.attachToComponent(&releaseSlider, false);
+    releaseSlider.setLookAndFeel(&otherLookAndFeel);
+    releaseSlider.setBubbleMsg("Boost the signal volume before it gets processed");
+    addAndMakeVisible(releaseSlider.bubbleMsg);
     
     
     // Add them components to the screen
-    addAndMakeVisible(inGain);
-    addAndMakeVisible(outGain);
-    addAndMakeVisible(attack);
-    addAndMakeVisible(release);
+    addAndMakeVisible(inGainSlider);
+    addAndMakeVisible(outGainSlider);
+    addAndMakeVisible(attackSlider);
+    addAndMakeVisible(releaseSlider);
     addAndMakeVisible(inGainLabel);
     addAndMakeVisible(outGainLabel);
     addAndMakeVisible(attackLabel);
@@ -61,7 +61,7 @@ MainComponent::MainComponent()
 
     
 //    addAndMakeVisible(t);
-//    addAndMakeVisible(inGain.t);
+//    addAndMakeVisible(inGainSlider.t);
     
 }
 
@@ -139,16 +139,16 @@ void MainComponent::resized()
         ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
     
     // Tooltips
-    inGain.setBubblePosition(topLeft);
-    outGain.setBubblePosition(topRight);
-    attack.setBubblePosition(bottomLeft);
-    release.setBubblePosition(bottomRight);
+    inGainSlider.setBubblePosition(topLeft);
+    outGainSlider.setBubblePosition(topRight);
+    attackSlider.setBubblePosition(bottomLeft);
+    releaseSlider.setBubblePosition(bottomRight);
     
     
-    inGain.setBounds(topLeft);
-    outGain.setBounds(topRight);
-    attack.setBounds(bottomLeft);
-    release.setBounds(bottomRight);
+    inGainSlider.setBounds(topLeft);
+    outGainSlider.setBounds(topRight);
+    attackSlider.setBounds(bottomLeft);
+    releaseSlider.setBounds(bottomRight);
     
     
 }

@@ -100,13 +100,13 @@ class MainComponent : public juce::Component
         
         OtherLookAndFeel otherLookAndFeel;
         
-        TooltipSlider inGain;
+        TooltipSlider inGainSlider;
         juce::Label inGainLabel;
-        TooltipSlider outGain;
+        TooltipSlider outGainSlider;
         juce::Label outGainLabel;
-        TooltipSlider attack;
+        TooltipSlider attackSlider;
         juce::Label attackLabel;
-        TooltipSlider release;
+        TooltipSlider releaseSlider;
         juce::Label releaseLabel;
         
         juce::Rectangle<int> topLeft;
