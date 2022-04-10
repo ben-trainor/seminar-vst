@@ -118,15 +118,6 @@ private:
     AudioProcessorValueTreeState& parameters;
 
     CompressorVisualizer cv;
-
-    Slider threshold, knee, attack, release, ratio, makeUp;
-    std::unique_ptr<SliderAttachment> thresholdAttachment, kneeAttachment, attackAttachment,
-        releaseAttachment, ratioAttachment, makeUpAttachment;
-    
-    
-    // Original code
-    //==============================================================================
-    OtherLookAndFeel otherLookAndFeel;
     
     TooltipSlider inGainSlider;
     juce::Label inGainLabel;
@@ -138,6 +129,15 @@ private:
     juce::Label releaseLabel;
     TooltipSlider ratioSlider;
     juce::Label ratioLabel;
+
+    Slider threshold, knee, attack, release, ratio, makeUp;
+    std::unique_ptr<SliderAttachment> thresholdAttachment, kneeAttachment, attackAttachment,
+        releaseAttachment, ratioAttachment, makeUpAttachment;
+    
+    // Original code
+    //==============================================================================
+    OtherLookAndFeel otherLookAndFeel;
+    
     
     juce::Rectangle<int> topLeft;
     juce::Rectangle<int> topRight;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="w2cOsR" name="SimpleCompressor" projectType="audioplug" companyName="Daniel Rudrich"
+<JUCERPROJECT id="w2cOsR" name="ED76" projectType="audioplug" companyName="Ben Trainor"
               displaySplashScreen="1" jucerFormatVersion="1">
-  <MAINGROUP id="e4DU2h" name="SimpleCompressor">
+  <MAINGROUP id="e4DU2h" name="ED76">
     <GROUP id="{2E892F63-FB83-71E0-C2E2-7BB8CB252826}" name="Source">
       <FILE id="axZFJD" name="Delay.h" compile="0" resource="0" file="../thirdparty/Delay.h"/>
       <FILE id="jemvBB" name="CompressorVisualizer.h" compile="0" resource="0"
