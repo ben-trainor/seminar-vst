@@ -8,6 +8,7 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4 {
     public:
     
     
+        // Got this from JUCE docs, just adjusted to my liking
         void drawRotarySlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, juce::Slider &) override {
             
             auto radius = (float) juce::jmin (width / 2.5, height / 2.5) - 4.0f;
@@ -18,6 +19,8 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4 {
             auto rw = radius * 2.0f;
             auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
             
+            
+            // Color options
             // fill
             g.setColour (juce::Colours::white);
             g.fillEllipse (rx, ry, rw, rw);
@@ -62,13 +65,10 @@ class TooltipSlider : public juce::Slider {
         // on right click, display the bubble hint
         void mouseDown(const juce::MouseEvent &e) override {
 
-//            std::cout << "Hello, world!";
-
             juce::ModifierKeys modifiers = juce::ModifierKeys::getCurrentModifiersRealtime();
 
             // check the modkeys
             if (modifiers.isPopupMenu()) {
-//                std::cout << "Right clicked!";
                 bubbleMsg.showAt(bubbleRectangle, juce::AttributedString(bubbleMsgString), 2000);
             }
             else {
@@ -98,26 +98,18 @@ class MainComponent : public juce::Component
     
     private:
         
-        OtherLookAndFeel otherLookAndFeel;
+        OtherLookAndFeel otherLookAndFeel; // declare instance of custom LookAndFeel
         
-        TooltipSlider inGainSlider;
-        juce::Label inGainLabel;
-        TooltipSlider outGainSlider;
-        juce::Label outGainLabel;
-        TooltipSlider attackSlider;
-        juce::Label attackLabel;
-        TooltipSlider releaseSlider;
-        juce::Label releaseLabel;
+        // Declare components
+        TooltipSlider inGainSlider, outGainSlider, attackSlider, releaseSlider;
+        juce::Label inGainLabel, outGainLabel, attackLabel, releaseLabel;
         
-        juce::Rectangle<int> topLeft;
-        juce::Rectangle<int> topRight;
-        juce::Rectangle<int> bottomLeft;
-        juce::Rectangle<int> bottomRight;
-        juce::Rectangle<int> topMiddle;
-        juce::Rectangle<int> buttonBox; // Rectangle to hold all the ratio buttons
+        // Rectangles for use with GUI functions
+        juce::Rectangle<int> topLeft, topRight, bottomLeft, bottomRight, topMiddle, buttonBox;
         
         juce::Point<int> topMiddlePoint;
         
+        // Unused
         juce::TextButton ratio4 {"4:1"};
         juce::TextButton ratio8 {"8:1"};
         juce::TextButton ratio12 {"12:1"};

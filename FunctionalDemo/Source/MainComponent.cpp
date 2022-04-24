@@ -3,22 +3,18 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
+    // set size of plugin window using 1.5:1 ratio
     setSize(800, 533);
     
     
-    // Tooltips
-//    t.addMouseListener(&listener, true);
-//    inGainSlider.addMouseListener(&listener, true);
-    
-        
-    // Slider declarations, for the main knobs
-    inGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    // Slider formatting, for the main knobs
+    inGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag); // click and drag upwards to rotate clockwise, vice versa
     inGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     inGainLabel.setText("IN", juce::NotificationType::dontSendNotification);
     inGainLabel.attachToComponent(&inGainSlider, false);
-    inGainSlider.setLookAndFeel(&otherLookAndFeel);
-    inGainSlider.setBubbleMsg("Boost the signal volume before it gets processed");
-    addAndMakeVisible(inGainSlider.bubbleMsg);
+    inGainSlider.setLookAndFeel(&otherLookAndFeel); // change draw style to custom LookAndFeel class
+    inGainSlider.setBubbleMsg("Boost the signal volume before it gets processed"); // tooltip message declaration
+    addAndMakeVisible(inGainSlider.bubbleMsg); // must add the message to the screen
     
     outGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     outGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
@@ -45,7 +41,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(releaseSlider.bubbleMsg);
     
     
-    // Add them components to the screen
+    // Add the components to the screen
     addAndMakeVisible(inGainSlider);
     addAndMakeVisible(outGainSlider);
     addAndMakeVisible(attackSlider);
@@ -59,9 +55,6 @@ MainComponent::MainComponent()
     addAndMakeVisible(ratio12);
     addAndMakeVisible(ratio20);
 
-    
-//    addAndMakeVisible(t);
-//    addAndMakeVisible(inGainSlider.t);
     
 }
 
@@ -77,24 +70,27 @@ void MainComponent::paint (juce::Graphics& g)
     juce::Font theFont("VCR OSD Mono", "regular", 20.0f);
     g.setFont(theFont);
     
+    // Rectangles for reference
 //    g.drawRect(topLeft);
 //    g.drawRect(topRight);
 //    g.drawRect(bottomLeft);
 //    g.drawRect(bottomRight);
-    g.drawRect(topMiddle);
 //    g.drawRect(buttonBox);
+    g.drawRect(topMiddle); // border around graph
 }
 
 void MainComponent::resized()
 {
     
+    // Dimensions for drawing GUI
+    // Proportionally based on width of GUI for easy modification
     const float knobWidth = getWidth() / 4;
     const float knobScaleModifier = 0.9;
     const float meterWidth = getWidth() / 3;
     const float meterHeight = meterWidth * 0.8;
     const float border = getWidth() / 20;
     const float borderModifier = 1.5;
-    const float buttonBoxBorder = getWidth() / 100;
+//    const float buttonBoxBorder = getWidth() / 100;
 
     // Top row of functions
     
@@ -129,21 +125,22 @@ void MainComponent::resized()
         buttonBox.setHeight(meterHeight);
         buttonBox.setPosition((getWidth() / 2) - (meterWidth / 2), getHeight() - border - meterHeight);
     
-        ratio4.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-        ratio4.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio4.getHeight() / 2) - buttonBoxBorder);
-        ratio8.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-        ratio8.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + (ratio8.getHeight() / 2) + buttonBoxBorder);
-        ratio12.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-        ratio12.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio12.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio12.getHeight() / 2) - buttonBoxBorder);
-        ratio20.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-        ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
+        // OLD BUTTONS
+//        ratio4.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+//        ratio4.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio4.getHeight() / 2) - buttonBoxBorder);
+//        ratio8.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+//        ratio8.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + (ratio8.getHeight() / 2) + buttonBoxBorder);
+//        ratio12.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+//        ratio12.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio12.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio12.getHeight() / 2) - buttonBoxBorder);
+//        ratio20.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
+//        ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
     
-    // Tooltips
+    
+    // Align tooltips to corresponding knobs
     inGainSlider.setBubblePosition(topLeft);
     outGainSlider.setBubblePosition(topRight);
     attackSlider.setBubblePosition(bottomLeft);
     releaseSlider.setBubblePosition(bottomRight);
-    
     
     inGainSlider.setBounds(topLeft);
     outGainSlider.setBounds(topRight);

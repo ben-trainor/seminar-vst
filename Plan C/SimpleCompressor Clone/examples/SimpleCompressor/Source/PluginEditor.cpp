@@ -25,31 +25,7 @@ SimpleCompressorAudioProcessorEditor::SimpleCompressorAudioProcessorEditor (Simp
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (800,533);
-
-//    addAndMakeVisible (threshold);
-//    thresholdAttachment.reset (new SliderAttachment (parameters, "threshold", threshold));
-//    threshold.setTextValueSuffix (" dB");
-//
-//    addAndMakeVisible (knee);
-//    kneeAttachment.reset (new SliderAttachment (parameters, "knee", knee));
-//    knee.setTextValueSuffix (" dB");
-//
-//    addAndMakeVisible (attack);
-//    attackAttachment.reset (new SliderAttachment (parameters, "attack", attack));
-//    attack.setTextValueSuffix (" ms");
-//
-//    addAndMakeVisible (release);
-//    releaseAttachment.reset (new SliderAttachment (parameters, "release", release));
-//    release.setTextValueSuffix (" ms");
-//
-//    addAndMakeVisible (ratio);
-//    ratioAttachment.reset (new SliderAttachment (parameters, "ratio", ratio));
-//    ratio.setTextValueSuffix (" : 1");
-//
-//    addAndMakeVisible (makeUp);
-//    makeUpAttachment.reset (new SliderAttachment (parameters, "makeUp", makeUp));
-//    makeUp.setTextValueSuffix (" dB");
-//
+    
     addAndMakeVisible (cv);
     startTimer (50);
     
@@ -58,8 +34,10 @@ SimpleCompressorAudioProcessorEditor::SimpleCompressorAudioProcessorEditor (Simp
     inGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     inGainLabel.setText("THRESHOLD", juce::NotificationType::dontSendNotification);
     inGainLabel.attachToComponent(&inGainSlider, false);
-    inGainSlider.setLookAndFeel(&otherLookAndFeel);
-    inGainSlider.setBubbleMsg("How loud the signal must be before getting compressed");
+    inGainSlider.setLookAndFeel(&otherLookAndFeel); // Use custom GUI
+    inGainSlider.setBubbleMsg("How loud the signal must be before getting compressed"); // Tooltip text
+    
+    // Each of these attaches my sliders to SimpleCompressor's backend
     thresholdAttachment.reset (new SliderAttachment (parameters, "threshold", inGainSlider));
     
     outGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -95,12 +73,8 @@ SimpleCompressorAudioProcessorEditor::SimpleCompressorAudioProcessorEditor (Simp
     ratioAttachment.reset (new SliderAttachment (parameters, "ratio", ratioSlider));
     
     
-    
-//    addAndMakeVisible(ratio4);
-//    addAndMakeVisible(ratio8);
-//    addAndMakeVisible(ratio12);
-//    addAndMakeVisible(ratio20);
-    
+    // Add components to the screen
+    // Stack on top of each other in order, so bubbleMsg's go at the end
     addAndMakeVisible(inGainSlider);
     addAndMakeVisible(outGainSlider);
     addAndMakeVisible(attackSlider);
@@ -129,59 +103,18 @@ SimpleCompressorAudioProcessorEditor::~SimpleCompressorAudioProcessorEditor()
 //==============================================================================
 void SimpleCompressorAudioProcessorEditor::paint (Graphics& g)
 {
-//    auto bounds = getLocalBounds();
-
-//    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-//
-//    g.setColour (Colours::white);
-//    g.setFont (20.0f);
-//
-//    g.drawFittedText ("SimpleCompressor", bounds.removeFromTop (25), Justification::centred, 1);
-//
-//    auto labelRow = bounds.removeFromBottom (12);
-//
-//    g.setFont (10.0f);
-//    g.drawFittedText ("Threshold", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
-//    labelRow.removeFromLeft (8);
-//    g.drawFittedText ("Knee", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
-//    labelRow.removeFromLeft (8);
-//    g.drawFittedText ("Attack", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
-//    labelRow.removeFromLeft (8);
-//    g.drawFittedText ("Release", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
-//    labelRow.removeFromLeft (8);
-//    g.drawFittedText ("Ratio", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
-//    labelRow.removeFromLeft (8);
-//    g.drawFittedText ("MakeUp", labelRow.removeFromLeft (60), 12, Justification::centred, 1);
     
-    g.fillAll(juce::Colours::steelblue);
-    g.setColour(juce::Colours::white);
+    g.fillAll(juce::Colours::steelblue); // Background color
+    g.setColour(juce::Colours::white); // Font color
     
+    // Visualizer
     g.drawRect(topMiddle);
     g.fillRect(topMiddle);
-//    g.drawRect(buttonBox);
 
 }
 
 void SimpleCompressorAudioProcessorEditor::resized()
 {
-//    auto bounds = getLocalBounds();
-//    bounds.removeFromTop (22);
-//    bounds.removeFromBottom (12);
-//
-//    auto row = bounds.removeFromBottom (80);
-//
-//    threshold.setBounds (row.removeFromLeft (60));
-//    row.removeFromLeft (8);
-//    knee.setBounds (row.removeFromLeft (60));
-//    row.removeFromLeft (8);
-//    attack.setBounds (row.removeFromLeft (60));
-//    row.removeFromLeft (8);
-//    release.setBounds (row.removeFromLeft (60));
-//    row.removeFromLeft (8);
-//    ratio.setBounds (row.removeFromLeft (60));
-//    row.removeFromLeft (8);
-//    makeUp.setBounds (row.removeFromLeft (60));
-//
     
     /* My code */
     
@@ -191,7 +124,7 @@ void SimpleCompressorAudioProcessorEditor::resized()
     const float meterHeight = meterWidth * 0.8;
     const float border = getWidth() / 20;
     const float borderModifier = 1.5;
-//    const float buttonBoxBorder = getWidth() / 100;
+    
 
     // Top row of functions
     
@@ -211,6 +144,7 @@ void SimpleCompressorAudioProcessorEditor::resized()
         topMiddlePoint.setX(topMiddle.getX());
         topMiddlePoint.setY(topMiddle.getY());
     
+    
     // Bottom row of functions
     
         // Knobs
@@ -226,16 +160,8 @@ void SimpleCompressorAudioProcessorEditor::resized()
         buttonBox.setHeight(meterHeight / 1.5);
         buttonBox.setPosition((getWidth() / 2) - (meterWidth / 3), getHeight() - meterHeight / 1.01);
     
-//        ratio4.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-//        ratio4.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio4.getHeight() / 2) - buttonBoxBorder);
-//        ratio8.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-//        ratio8.setCentrePosition(buttonBox.getX() + (ratio4.getWidth() / 2) + buttonBoxBorder, buttonBox.getY() + (ratio8.getHeight() / 2) + buttonBoxBorder);
-//        ratio12.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-//        ratio12.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio12.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + buttonBox.getHeight() - (ratio12.getHeight() / 2) - buttonBoxBorder);
-//        ratio20.setSize((buttonBox.getWidth() / 2) - buttonBoxBorder, (buttonBox.getHeight() / 2) - buttonBoxBorder);
-//        ratio20.setCentrePosition(buttonBox.getX() + buttonBox.getWidth() - (ratio20.getWidth() / 2) - buttonBoxBorder, buttonBox.getY() + (ratio20.getHeight() / 2) + buttonBoxBorder);
-    
         ratio.setBounds(buttonBox);
+    
     
     // Tooltips
     inGainSlider.setBubblePosition(topLeft);
@@ -243,7 +169,6 @@ void SimpleCompressorAudioProcessorEditor::resized()
     attackSlider.setBubblePosition(bottomLeft);
     releaseSlider.setBubblePosition(bottomRight);
     ratioSlider.setBubblePosition(buttonBox);
-    
     
     inGainSlider.setBounds(topLeft);
     outGainSlider.setBounds(topRight);
@@ -257,6 +182,7 @@ void SimpleCompressorAudioProcessorEditor::resized()
 }
 
 
+// From SimpleCompressor; checks if modifiers have changed
 void SimpleCompressorAudioProcessorEditor::timerCallback()
 {
     if (processor.characteristicChanged.get())

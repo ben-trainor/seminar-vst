@@ -25,6 +25,7 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4 {
     public:
     
     
+        // Taken from JUCE tutorials
         void drawRotarySlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, juce::Slider &) override {
             
             auto radius = (float) juce::jmin (width / 2.5, height / 2.5) - 4.0f;
@@ -35,6 +36,7 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4 {
             auto rw = radius * 2.0f;
             auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
             
+            // Color options chosen by me
             // fill
             g.setColour (juce::Colours::white);
             g.fillEllipse (rx, ry, rw, rw);
@@ -80,13 +82,10 @@ class TooltipSlider : public juce::Slider {
         // on right click, display the bubble hint
         void mouseDown(const juce::MouseEvent &e) override {
 
-//            std::cout << "Hello, world!";
-
             juce::ModifierKeys modifiers = juce::ModifierKeys::getCurrentModifiersRealtime();
 
             // check the modkeys
             if (modifiers.isPopupMenu()) {
-//                std::cout << "Right clicked!";
                 bubbleMsg.showAt(bubbleRectangle, juce::AttributedString(bubbleMsgString), 2000);
             }
             else {
@@ -112,42 +111,38 @@ public:
     void timerCallback() override;
 
 private:
+    
+    // SimpleCompressor
+    //==============================================================================
     // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
+    // access the processor object that created it. (from SimpleCompressor)
     SimpleCompressorAudioProcessor& processor;
     AudioProcessorValueTreeState& parameters;
 
+    // Graph instance
     CompressorVisualizer cv;
     
-    TooltipSlider inGainSlider;
-    juce::Label inGainLabel;
-    TooltipSlider outGainSlider;
-    juce::Label outGainLabel;
-    TooltipSlider attackSlider;
-    juce::Label attackLabel;
-    TooltipSlider releaseSlider;
-    juce::Label releaseLabel;
-    TooltipSlider ratioSlider;
-    juce::Label ratioLabel;
+    // Ben Trainor's sliders
+    // Have to declare these before pointers
+    TooltipSlider inGainSlider, outGainSlider, attackSlider, releaseSlider, ratioSlider;
+    juce::Label inGainLabel, outGainLabel, attackLabel, releaseLabel, ratioLabel;
 
+    // Unused SimpleCompressor slider
     Slider threshold, knee, attack, release, ratio, makeUp;
     std::unique_ptr<SliderAttachment> thresholdAttachment, kneeAttachment, attackAttachment,
         releaseAttachment, ratioAttachment, makeUpAttachment;
     
-    // Original code
+    // Ben Trainor code
     //==============================================================================
     OtherLookAndFeel otherLookAndFeel;
     
-    
-    juce::Rectangle<int> topLeft;
-    juce::Rectangle<int> topRight;
-    juce::Rectangle<int> bottomLeft;
-    juce::Rectangle<int> bottomRight;
-    juce::Rectangle<int> topMiddle;
-    juce::Rectangle<int> buttonBox; // Rectangle to hold all the ratio buttons
+    // Rectangles for use with the GUI code
+    juce::Rectangle<int> topLeft, topRight, bottomLeft, bottomRight, topMiddle;
+    juce::Rectangle<int> buttonBox; // Unused
     
     juce::Point<int> topMiddlePoint;
     
+    // Unused
     juce::TextButton ratio4 {"4:1"};
     juce::TextButton ratio8 {"8:1"};
     juce::TextButton ratio12 {"12:1"};
